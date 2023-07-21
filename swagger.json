@@ -1,0 +1,220 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Hubx API",
+      "description": "API Documentation",
+      "version": "0.1.0"
+    },
+    "tags": [
+      {
+        "name": "Books",
+        "description": "Book Operations"
+      }
+
+    ],
+    "paths": {
+      "/books":{
+        "get": {
+            "tags": ["Book"],
+            "summary": "Get all the books in the system",
+            "operationId": "listBooks",
+            "responses": {
+              "200": {
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "data":{
+                            "type":"array",
+                            "items":{
+                              "type": "object",
+                              "properties": {
+                                "title": { "type": "string" },
+                                "price": { "type": "number" },
+                                "isbn": { "type": "number" },
+                                "language": { "type": "string" },
+                                "numberOfPages": { "type": "number" },
+                                "publisher": { "type": "string" },
+                                "author": {
+                                    "type":"object",
+                                    "properties":{
+                                        "name": { "type": "string" },
+                                        "country": { "type": "string" },
+                                        "dateOfBirth": { "type": "string" }
+
+                                    }
+                                }
+                              }
+                            }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "500": {
+                "message": "string",
+                "error": "object"
+              }
+            }
+          },
+        "post":{
+            "tags": ["Book"],
+            "summary": "Create a new book",
+            "operationId": "createBook",
+            "requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "title": { "type": "string", "required":true },
+                      "price": { "type": "number" , "required":true},
+                      "isbn": { "type": "number", "required":true },
+                      "language": { "type": "string", "required":true },
+                      "numberOfPages": { "type": "number", "required":true },
+                      "publisher": { "type": "string", "required":true },
+                      "author": {
+                          "type":"object",
+                          "properties":{
+                              "name": { "type": "string", "required":true },
+                              "country": { "type": "string" , "required":true},
+                              "dateOfBirth": { "type": "string", "required":true, "default":"2022-07-15" }
+
+                          }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "title": { "type": "string" },
+                        "price": { "type": "number" },
+                        "isbn": { "type": "number" },
+                        "language": { "type": "string" },
+                        "numberOfPages": { "type": "number" },
+                        "publisher": { "type": "string" },
+                        "author": {
+                            "type":"object",
+                            "properties":{
+                                "name": { "type": "string" },
+                                "country": { "type": "string" },
+                                "dateOfBirth": { "type": "string" }
+
+                            }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "400": {
+                "message": "string",
+                "error": "object"
+              }
+            }
+      
+          }
+        },
+      "/books/{id}":{
+        "delete": {
+          "tags": ["Book"],
+          "summary": "Delete the book with the id in the system",
+          "operationId": "deleteBook",
+          "parameters":[{
+            "in":"path",
+            "name": "id",
+            "description": "ID of the book",
+            "type":"string",
+            "required":true
+          }],
+          "responses": {
+            "204": {
+            
+            },
+            "400": {
+              "message": "string",
+              "error": "object"
+            }
+          }
+        },
+        "patch":{
+            "tags": ["Book"],
+            "summary": "Update the book with the id in the system",
+            "operationId": "updateBook",
+            "requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                    
+                        "title": { "type": "string" },
+                        "price": { "type": "number" },
+                        "isbn": { "type": "number" },
+                        "language": { "type": "string" },
+                        "numberOfPages": { "type": "number" },
+                        "publisher": { "type": "string" },
+                        "author": {
+                          "type":"object",
+                          "properties":{
+                              "name": { "type": "string" },
+                              "country": { "type": "string" },
+                              "dateOfBirth": { "type": "string" }
+
+                          }
+                        }
+
+                    },
+                    "minProperties": 1
+                  }
+                }
+              }
+            },
+            "parameters":[{
+              "in":"path",
+              "name": "id",
+              "description": "ID of the user",
+              "type":"string",
+              "required":true
+            }],
+            "responses": {
+              "200": {
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                          "message":{ "type": "string", "example": "Successful" },
+                        "data":{
+  
+                              "type": "object",
+                              "properties": {
+                                "username": { "type": "string" }
+                              }
+                            
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "400": {
+                "message": "string",
+                "error": "object"
+              }
+            }
+        }
+
+      }
+
+    }
+  }

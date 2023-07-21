@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  node-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:${PORT}
+    env_file: .env
+
+    networks:
+      - nodemongonet
+
+  mongodb:
+    image: mongo
+    volumes:
+      - ./__mongo_data:/data/db
+    ports:
+      - '${MONGO_PORT}:27017'
+    env_file:
+      - .env
+    networks:
+      - nodemongonet
+networks:
+  nodemongonet:
+    driver: bridge
